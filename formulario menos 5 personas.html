@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Votación - Comité de Convivencia Laboral</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 to-purple-100 min-h-screen p-6">
+    <div class="max-w-6xl mx-auto">
+        <!-- FORMULARIO DE DATOS -->
+        <div class="bg-white rounded-lg shadow-2xl p-8 mb-6">
+            <div class="flex items-center gap-3 mb-6">
+                <svg class="w-10 h-10 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                </svg>
+                <h1 class="text-3xl font-bold text-gray-800">Generador de Formulario de Votación Menos de 5 trabajadores</h1>
+            </div>
+            
+            <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 mb-6">
+                <p class="text-sm text-indigo-800">
+                    <strong>📌 Para empresas con menos de 5 trabajadores:</strong> Se elige 1 representante (sin suplente) según Resolución 3461 de 2025, Art. 3.
+                </p>
+            </div>
+
+            <p class="text-gray-600 mb-8">Complete los datos de la empresa, fechas y candidatos para generar el documento de votación.</p>
+
+            <!-- DATOS DE LA EMPRESA -->
+            <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 mb-6">
+                <h2 class="font-bold text-indigo-900 text-xl mb-4">📋 Datos de la Empresa</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Nombre de la Empresa</label>
+                    <input type="text" id="empresa" value="SOCIEDAD ESPACIOS BIA S.A.S." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">NIT</label>
+                    <input type="text" id="nit" value="901832773 – 3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Ciudad</label>
+                    <input type="text" id="ciudad" value="Santiago de Cali" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Fecha del Documento</label>
+                    <input type="text" id="fechaDocumento" placeholder="Ej: 10 de diciembre de 2025" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Período de Votación</label>
+                    <input type="text" id="periodoVotacion" placeholder="Ej: Del 10 al 13 de diciembre de 2025" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Fecha Publicación Resultados</label>
+                    <input type="text" id="fechaResultados" placeholder="Ej: 14 de diciembre de 2025" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                </div>
+            </div>
+
+            <!-- SECCIÓN DE CANDIDATOS -->
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                <h2 class="font-bold text-blue-900 text-xl mb-2">👥 Candidatos Postulados</h2>
+                <p class="text-sm text-blue-800">Agregue todos los candidatos que participarán en la votación</p>
+            </div>
+
+            <div id="candidatosContainer" class="space-y-4 mb-6">
+                <!-- Candidato 1 por defecto -->
+                <div class="candidato-item bg-gray-50 border border-gray-300 rounded-lg p-4">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="font-bold text-gray-700">Candidato 1</h3>
+                        <button type="button" class="btn-eliminar text-red-600 hover:text-red-800 text-sm font-semibold">Eliminar</button>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <input type="text" placeholder="Nombre completo" class="candidato-nombre w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <input type="text" placeholder="Cargo" class="candidato-cargo w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <input type="text" placeholder="Área o dependencia" class="candidato-area w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <input type="text" placeholder="Motivación (opcional, máx 200 caracteres)" class="candidato-motivacion w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" maxlength="200">
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" id="btnAgregarCandidato" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 mb-6 flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                Agregar Otro Candidato
+            </button>
+
+            <!-- BOTÓN GENERAR -->
+            <button type="button" id="btnGenerar" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-4 px-6 rounded-lg transition duration-200 flex items-center justify-center gap-2 text-lg">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Generar Documento de Votación
+            </button>
+        </div>
+
+        <!-- TEXTO GENERADO -->
+        <div id="textoGenerado" class="bg-white rounded-lg shadow-2xl p-8 hidden">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                Documento Generado
+            </h2>
+            
+            <div class="grid md:grid-cols-2 gap-4 mb-6">
+                <button type="button" id="btnCopiar" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                    </svg>
+                    Copiar para Word
+                </button>
+                
+                <button type="button" id="btnDescargar" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    Descargar TXT
+                </button>
+            </div>
+
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-6 max-h-96 overflow-y-auto">
+                <pre id="textoFinal" class="whitespace-pre-wrap text-sm text-gray-800 font-mono"></pre>
+            </div>
+
+            <div class="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                <p class="text-sm text-green-800">
+                    <strong>✅ Listo para Word:</strong> Presiona "Copiar para Word" y luego pega en Word con <strong>Ctrl+V</strong>. El texto se pegará sin espacios irregulares.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let contadorCandidatos = 1;
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('btnAgregarCandidato').addEventListener('click', agregarCandidato);
+            document.getElementById('btnGenerar').addEventListener('click', generarTexto);
+            document.getElementById('btnCopiar').addEventListener('click', copiarTexto);
+            document.getElementById('btnDescargar').addEventListener('click', descargarTxt);
+            configurarBotonesEliminar();
+        });
+
+        function configurarBotonesEliminar() {
+            const botonesEliminar = document.querySelectorAll('.btn-eliminar');
+            botonesEliminar.forEach(btn => {
+                btn.removeEventListener('click', eliminarCandidato);
+                btn.addEventListener('click', eliminarCandidato);
+            });
+        }
+
+        function agregarCandidato() {
+            contadorCandidatos++;
+            const container = document.getElementById('candidatosContainer');
+            const nuevoItem = document.createElement('div');
+            nuevoItem.className = 'candidato-item bg-gray-50 border border-gray-300 rounded-lg p-4';
+            nuevoItem.innerHTML = `
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="font-bold text-gray-700">Candidato ${contadorCandidatos}</h3>
+                    <button type="button" class="btn-eliminar text-red-600 hover:text-red-800 text-sm font-semibold">Eliminar</button>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <input type="text" placeholder="Nombre completo" class="candidato-nombre w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                    <input type="text" placeholder="Cargo" class="candidato-cargo w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                    <input type="text" placeholder="Área o dependencia" class="candidato-area w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                    <input type="text" placeholder="Motivación (opcional, máx 200 caracteres)" class="candidato-motivacion w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" maxlength="200">
+                </div>
+            `;
+            container.appendChild(nuevoItem);
+            configurarBotonesEliminar();
+        }
+
+        function eliminarCandidato(event) {
+            const items = document.querySelectorAll('.candidato-item');
+            if (items.length > 1) {
+                event.target.closest('.candidato-item').remove();
+                actualizarNumerosCandidatos();
+            } else {
+                alert('Debe haber al menos un candidato');
+            }
+        }
+
+        function actualizarNumerosCandidatos() {
+            const items = document.querySelectorAll('.candidato-item');
+            items.forEach((item, index) => {
+                item.querySelector('h3').textContent = `Candidato ${index + 1}`;
+            });
+            contadorCandidatos = items.length;
+        }
+
+        function generarTexto() {
+            const empresa = document.getElementById('empresa').value || 'SOCIEDAD ESPACIOS BIA S.A.S.';
+            const nit = document.getElementById('nit').value || '901832773 – 3';
+            const ciudad = document.getElementById('ciudad').value || 'Santiago de Cali';
+            const fechaDocumento = document.getElementById('fechaDocumento').value;
+            const periodoVotacion = document.getElementById('periodoVotacion').value;
+            const fechaResultados = document.getElementById('fechaResultados').value;
+
+            // Obtener candidatos
+            const candidatos = [];
+            document.querySelectorAll('.candidato-item').forEach((item, index) => {
+                const nombre = item.querySelector('.candidato-nombre').value;
+                const cargo = item.querySelector('.candidato-cargo').value;
+                const area = item.querySelector('.candidato-area').value;
+                const motivacion = item.querySelector('.candidato-motivacion').value;
+                
+                if (nombre && cargo && area) {
+                    candidatos.push({ nombre, cargo, area, motivacion });
+                }
+            });
+
+            if (candidatos.length === 0) {
+                alert('Por favor, agregue al menos un candidato completo (nombre, cargo y área)');
+                return;
+            }
+
+            // Generar sección de candidatos
+            let seccionCandidatos = '';
+            candidatos.forEach((c, index) => {
+                seccionCandidatos += `________________________________________
+
+CANDIDATO ${index + 1}
+
+• Nombre: ${c.nombre}
+• Cargo: ${c.cargo}
+• Área/Dependencia: ${c.area}`;
+                if (c.motivacion) {
+                    seccionCandidatos += `
+• Motivación: ${c.motivacion}`;
+                }
+                seccionCandidatos += '\n';
+            });
+
+            // Generar opciones de votación
+            let opcionesVotacion = '';
+            candidatos.forEach((c) => {
+                opcionesVotacion += `• ☐ ${c.nombre} - ${c.cargo} - ${c.area}\n`;
+            });
+            opcionesVotacion += '• ☐ Voto en blanco';
+
+            const texto = `VOTACIÓN - ELECCIÓN DE REPRESENTANTE DE LOS TRABAJADORES ANTE EL COMITÉ DE CONVIVENCIA LABORAL
+
+${empresa} - NIT ${nit}
+${ciudad}, ${fechaDocumento}
+
+PERÍODO DE VOTACIÓN: ${periodoVotacion}
+
+En ejercicio de su derecho democrático a elegir su representante ante el Comité de Convivencia Laboral, los trabajadores de ${empresa} están convocados a emitir su voto secreto a través del presente formulario electrónico.
+
+INSTRUCCIONES PARA VOTAR
+
+1. Lea cuidadosamente la información de todos los candidatos postulados.
+2. Seleccione UN SOLO candidato de su preferencia.
+3. Su voto es secreto, personal e intransferible.
+4. Una vez enviado el formulario, no podrá modificar su voto.
+5. Solo se contabilizará un voto por trabajador.
+
+CRITERIO DE DESIGNACIÓN
+
+• El candidato que obtenga el mayor número de votos será designado como Representante de los trabajadores ante el Comité de Convivencia Laboral.
+
+CANDIDATOS POSTULADOS
+
+A continuación se presentan los candidatos que cumplieron con todos los requisitos establecidos en la Resolución 3461 de 2025 para integrar el Comité de Convivencia Laboral:
+
+${seccionCandidatos}
+________________________________________
+
+IMPORTANTE:
+
+• El candidato con mayor número de votaciones será el representante de los trabajadores ante el Comité de Convivencia Laboral.
+• Conforme a la Resolución 3461 de 2025, las empresas con menos de cinco (5) trabajadores conformarán su Comité con un (1) representante de los trabajadores (sin suplente) y un (1) representante del empleador (sin suplente).
+• El Comité quedará conformado por dos (2) integrantes en total.
+• El empleador designará directamente su representante.
+• El período de funciones será de dos (2) años contados desde la comunicación oficial de resultados.
+• Los resultados serán publicados mediante correo electrónico institucional el día ${fechaResultados}, mediante escrutinio público que garantiza la transparencia del proceso electoral.
+
+SOBRE EL COMITÉ DE CONVIVENCIA LABORAL
+
+Recuerde que el Comité es un órgano preventivo, orientador y conciliador que promueve ambientes laborales respetuosos, libres de acoso laboral, discriminación y violencia basada en género. Su voto contribuye a fortalecer la convivencia y el respeto en nuestra organización.
+
+________________________________________
+
+PREGUNTAS DEL FORMULARIO - VOTACIÓN
+
+________________________________________
+
+Pregunta 1: Identificación del votante* (Obligatoria)
+
+Nombre completo:
+Número de cédula de ciudadanía:
+Correo electrónico institucional:
+Cargo actual:
+Área o dependencia:
+
+________________________________________
+
+Pregunta 2: Declaración de elegibilidad* (Obligatoria)
+
+Declaro que soy trabajador activo de ${empresa} con vínculo laboral vigente y que tengo derecho a participar en este proceso de votación democrática para elegir al representante de los trabajadores ante el Comité de Convivencia Laboral.
+
+Opciones:
+• ☐ Sí, confirmo que tengo derecho a votar
+• ☐ No tengo derecho a votar
+
+________________________________________
+
+Pregunta 3: Información sobre los candidatos (Informativa - Solo visible si seleccionó "Sí" en pregunta anterior)
+
+Antes de emitir su voto, confirme que ha leído la información de todos los candidatos postulados presentada al inicio de este formulario.
+
+Opciones:
+• ☐ Sí, he leído la información de todos los candidatos
+• ☐ Deseo revisar nuevamente la información antes de votar
+
+________________________________________
+
+Pregunta 4: Emisión del voto* (Obligatoria - Solo visible si seleccionó "Sí" en pregunta anterior)
+
+Seleccione el candidato de su preferencia para representar a los trabajadores ante el Comité de Convivencia Laboral.
+
+IMPORTANTE: El candidato con mayor votación será el Representante de los trabajadores. Usted solo debe seleccionar UN candidato.
+
+Opciones (selección única):
+
+${opcionesVotacion}
+
+________________________________________
+
+Pregunta 5: Consentimiento de validación* (Obligatoria)
+
+Autorizo a ${empresa} para validar mi identidad como trabajador activo de la empresa y verificar que no he emitido voto duplicado, garantizando un proceso electoral transparente, democrático y conforme a la normatividad vigente.
+
+Entiendo que:
+• Mi voto será completamente secreto
+• Solo se utilizarán mis datos de identificación para validar mi participación
+• No se revelará mi preferencia electoral a ninguna persona
+• Los datos serán tratados conforme a la Ley 1581 de 2012
+
+Opciones:
+• ☐ Autorizo la validación de mi participación
+• ☐ No autorizo`;
+
+            document.getElementById('textoFinal').textContent = texto;
+            document.getElementById('textoGenerado').classList.remove('hidden');
+            document.getElementById('textoGenerado').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function copiarTexto() {
+            const texto = document.getElementById('textoFinal').textContent;
+            navigator.clipboard.writeText(texto).then(() => {
+                alert('✅ Texto copiado al portapapeles. Ahora puedes pegarlo en Word con Ctrl+V');
+            }).catch(err => {
+                alert('Error al copiar: ' + err);
+            });
+        }
+
+        function descargarTxt() {
+            const texto = document.getElementById('textoFinal').textContent;
+            const empresa = document.getElementById('empresa').value.replace(/\s+/g, '_');
+            const blob = new Blob([texto], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Votacion_${empresa}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
