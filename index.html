@@ -238,9 +238,7 @@ CANDIDATO ${index + 1}
             let opcionesVotacion = '';
             candidatos.forEach((c) => {
                 opcionesVotacion += `• ☐ ${c.nombre} - ${c.cargo} - ${c.area}\n`;
-            });
-            opcionesVotacion += '• ☐ Voto en blanco';
-
+     
             const texto = `VOTACIÓN - ELECCIÓN DE REPRESENTANTE DE LOS TRABAJADORES ANTE EL COMITÉ DE CONVIVENCIA LABORAL
 
 ${empresa} - NIT ${nit}
@@ -372,3 +370,4 @@ Opciones:
     </script>
 </body>
 </html>
+
